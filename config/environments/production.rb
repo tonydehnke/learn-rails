@@ -76,6 +76,23 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  # email enabled in production
+  config.action_mailer.smtp_settings = {
+    address: "smtp.sendgrid.net",
+    port: 587,
+    domain: Rails.application.secrets.learn-rails-tdehnke,
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: Rails.application.secrets.email_provider_username,
+    password: Rails.application.secrets.email_provider_password
+  }
+  # ActionMailer Config
+  config.action_mailer.default_url_options = { :host => Rails.application.secrets.learn-rails-tdehnke }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+
+
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
